@@ -59,10 +59,14 @@ class Venta(models.Model):
     Modelo para registrar ventas
     """
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    distribuidor = models.ForeignKey(Usuario, on_delete=models.CASCADE, limit_choices_to={'rol': 'distribuidor'}, null=True, blank=True)
     cantidad = models.PositiveIntegerField()
     costo = models.DecimalField(max_digits=10, decimal_places=2)
     ganancia = models.DecimalField(max_digits=10, decimal_places=2)
     fecha = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['distribuidor__username', '-fecha']
+
     def __str__(self):
-        return f"Venta de {self.cantidad} {self.producto.nombre} el {self.fecha.strftime('%Y-%m-%d')}"
+        return f"Venta de {self.cantidad} {self.producto.nombre} por {self.distribuidor.username} el {self.fecha.strftime('%Y-%m-%d')}"

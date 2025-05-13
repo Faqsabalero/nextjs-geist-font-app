@@ -15,12 +15,13 @@ class ProductoAdmin(admin.ModelAdmin):
 
 @admin.register(StockAssignment)
 class StockAssignmentAdmin(admin.ModelAdmin):
-    list_display = ('from_user', 'to_user', 'producto', 'cantidad', 'fecha')
-    list_filter = ('fecha', 'from_user', 'to_user')
+    list_display = ('de_usuario', 'a_usuario', 'producto', 'cantidad', 'fecha_asignacion')
+    list_filter = ('fecha_asignacion', 'de_usuario', 'a_usuario')
     search_fields = ('producto__nombre',)
 
 @admin.register(Venta)
 class VentaAdmin(admin.ModelAdmin):
-    list_display = ('producto', 'cantidad', 'costo', 'ganancia', 'fecha')
-    list_filter = ('fecha',)
-    search_fields = ('producto__nombre',)
+    list_display = ('producto', 'distribuidor', 'cantidad', 'costo', 'ganancia', 'fecha')
+    list_filter = ('fecha', 'distribuidor')
+    search_fields = ('producto__nombre', 'distribuidor__username')
+    ordering = ('distribuidor__username', '-fecha')
