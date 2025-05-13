@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tienda - Productos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <header class="bg-black text-white p-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold">Tienda de Productos</h1>
+        <nav>
+            <a href="{% url 'carrito' %}" class="mr-4 hover:underline">Carrito</a>
+            <a href="{% url 'ventas' %}" class="mr-4 hover:underline">Ventas</a>
+            <a href="{% url 'logout' %}" class="hover:underline">Cerrar sesión</a>
+        </nav>
+    </header>
+    <main class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for producto in productos %}
+        <div class="bg-white p-4 rounded shadow">
+            <h3 class="text-lg font-semibold mb-2">{{ producto.nombre }}</h3>
+            <p class="mb-2">{{ producto.descripcion }}</p>
+            <p class="mb-2 font-bold">Precio: ${{ producto.precio }}</p>
+            <p class="mb-4">Stock: {{ producto.stock }}</p>
+            <a href="{% url 'add_to_cart' producto.id %}" class="inline-block bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">Agregar al carrito</a>
+        </div>
+        {% empty %}
+        <p>No hay productos disponibles.</p>
+        {% endfor %}
+    </main>
+</body>
+</html>
